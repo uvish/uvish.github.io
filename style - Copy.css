@@ -1,0 +1,67 @@
+@font-face{
+    font-family: head_font;
+    src: url('font/psfont.ttf');
+}
+#block_container{
+    display: inline-flex;
+    width: 100%;
+    height: 60px;
+}
+li:hover{
+    background-color: dimgray;
+}
+#top_bar,#body_div{
+    display:inline-block;
+}
+#OS_nav{
+    width: 100%;
+}
+body{
+    background: url('images/bkg.png') center no-repeat;
+    background-size: cover;
+}
+#os_nav_div{
+    padding-left: 30px;
+    padding-top: 30px;
+}
+#os_list_ul{
+    color: white;
+    font-family: head_font;
+}
+#sub_os_ul{
+    color: white;
+    font-family: head_font;
+}
+#sub_os_nav_div{
+    padding-left: 30px;
+}
+#top_bar{
+   font-family: head_font;
+   color: white;
+}
+h1{
+    font-family: head_font;
+    color: rgb(255, 255, 255);
+}
+#top_bar{
+    display: block;
+    width: 30%
+}
+#top_bar_ul{
+    text-align: right;
+}
+ul li{
+    display: inline-block;
+    list-style-type: none;
+    margin: 20;
+    padding: 20;
+}
+li{
+    padding: 10;
+}
+}
+#body_div{
+    width: 70%;
+    display: block;
+  padding: 10;
+}
