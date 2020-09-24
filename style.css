@@ -1,0 +1,210 @@
+:root{
+  --low: #C4C4C4;
+  --med:#565656;
+  --high:#000000;
+}
+p{
+  padding-top: 60px;
+  font-weight: bold: 
+}
+body{
+  background:var(--low);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+.logo{
+  margin:50px 0px 0px 50px;
+  order: 1;
+width: 89px;
+height: 84px;
+left: 50px;
+top: 47px;
+font-family: Roboto Condensed;
+font-style: normal;
+font-weight: bold;
+font-size: 70px;
+line-height: 84px;
+color: var(--med);
+text-shadow: 8px 4px 17px rgba(0, 0, 0, 0.25);
+}
+.mid_section{
+  order: 3;
+  width: 100%;
+  height: 300px;
+  
+}
+.text{
+  order: 2;
+  font-family: Roboto Condensed;
+font-style: normal;
+font-weight: bold;
+  color: var(--med);
+  text-align: center;
+  font-size: 3vw;
+  text-shadow: 0px 6px 16px rgba(0, 0, 0, 0.25);
+}
+.skills{
+  height: 500px;
+  top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.skill_box{
+  z-index: 2;
+  height: 148px;
+  width: 189px;
+  margin-top : 150px;
+  margin-bottom: 150px;
+  background: var(--med);
+  border-radius: 50px;
+background: linear-gradient(145deg, #d2d2d2, #b0b0b0);
+box-shadow:  8px 8px 27px #979797, 
+             -8px -8px 27px #f1f1f1;
+}
+.skills_text{
+width: 10vw;
+height: 7vh;
+left: -39px;
+top: 399px;
+font-family: Roboto Condensed;
+font-style: normal;
+font-weight: bold;
+font-size: 288px;
+line-height: 337px;
+color: rgba(86, 86, 86, 0.06);
+}
+
+.projects_section{
+  order: 4;
+  text-align: center
+}
+.projects{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around
+}
+
+.projects_text{
+  z-index: 1;
+width: 1059px;
+height: 372px;
+right: -193px;
+  margin-left: 500px;
+font-family: Roboto Condensed;
+font-style: normal;
+font-weight: bold;
+font-size: 288px;
+line-height: 337px;
+color: rgba(86, 86, 86, 0.06);
+}
+.project_box{
+  z-index: 2;
+  font-family: Roboto Condensed;
+font-style: normal;
+font-weight: bold;
+font-size: 25px;
+  font-size-adjust: auto;
+  text-align-last: auto;
+ 
+line-height: 59px;
+color: #565656;
+
+  height: 250px;
+  width: 189px;
+  margin-top : -150px;
+  margin-bottom: 150px;
+  background: var(--med);
+  border-radius: 50px;
+background: linear-gradient(145deg, #d2d2d2, #b0b0b0);
+box-shadow:  8px 8px 27px #979797, 
+             -8px -8px 27px #f1f1f1;
+
+}
+.contacts{
+  order: 5;
+}
+.android{
+  background:url("img/android.png");
+  background-position-x: -100px;
+  background-repeat: no-repeat;
+}
+.matlab{
+  background:url("img/matlab.png");
+  background-position-x: -40px;
+  background-position-y: 50px;
+  background-repeat: no-repeat;
+}
+.javascript{
+   background:url("img/js.png");
+  background-size: 400px;
+  background-position-x: -90px;
+  background-position-y: -100px;
+  background-repeat: no-repeat;
+}
+.contacts{
+  display: flex;
+  justify-content: space-between;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  height: 250px;
+  display: flex;
+  border-radius: 20px;
+background: linear-gradient(145deg, #d2d2d2, #b0b0b0);
+box-shadow:  9px 9px 21px #979797, 
+             -9px -9px 21px #f1f1f1;
+}
+.contact_text{
+  position: absolute;
+ z-index: 1;
+left: -10px;
+right: 34.29%;
+width: fit-content;
+font-family: Roboto Condensed;
+font-style: normal;
+font-weight: bold;
+font-size: 200px;
+line-height: 234px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: rgba(86, 86, 86, 0.06);
+}
+.contact_box{
+ z-index: 2;
+  margin: auto auto auto auto;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+background: linear-gradient(145deg, #d2d2d2, #b0b0b0);
+box-shadow:  14px 14px 28px #a7a7a7, 
+             -14px -14px 28px #e1e1e1;
+}
+.gmail{
+  background: url("img/gmail.png");
+  background-position-x: -12px;
+}
+.linkdin{
+  background: url("img/linkedin.png");
+  background-position-x: -12px;
+}
+.instagram{
+  background: url("img/instagram.png");
+  background-position-x: -12px;
+}
+.github{
+  background: url("img/github.png");
+  background-position-x: -12px;
+}
+.reddit{
+  background: url("img/reddit.png");
+  background-position-x: -12px;
+}
