@@ -185,7 +185,7 @@ color: rgba(86, 86, 86, 0.06);
   margin: auto auto auto auto;
   height: 100px;
   width: 100px;
-  border-radius: 50px;
+  border-radius: 2rem;
 background: linear-gradient(145deg, #d2d2d2, #b0b0b0);
 box-shadow:  14px 14px 28px #a7a7a7, 
              -14px -14px 28px #e1e1e1;
