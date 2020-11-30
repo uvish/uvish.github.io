@@ -91,16 +91,18 @@ color: rgba(86, 86, 86, 0.06);
 
 .projects_section{
   order: 4;
-  text-align: center
+  text-align: center;
+  z-index: -1;
 }
 .projects{
   display: flex;
   flex-direction: row;
-  justify-content: space-around
+  justify-content: space-around;
+  z-index: 1;
 }
 
 .projects_text{
-  z-index: 1;
+  z-index: -1;
 width: 1059px;
 height: 372px;
 right: -193px;
