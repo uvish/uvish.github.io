@@ -13,6 +13,14 @@ body{
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
+  overflow-y: scroll;
+}
+body::-webkit-scrollbar{
+  display: none;
+}
+body{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .logo{
   margin:50px 0px 0px 50px;
