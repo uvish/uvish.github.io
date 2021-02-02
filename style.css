@@ -219,3 +219,6 @@ box-shadow:  14px 14px 28px #a7a7a7,
   background: url("img/reddit.png");
   background-position-x: -12px;
 }
+img{
+  filter:opacity(0.5);
+}
