@@ -27,7 +27,7 @@ const PORTFOLIO = {
     { label: "Discipline",     value: "Full-Stack Development" },
     { label: "Focus Areas",    value: "Frontend · Backend · Networks · Cloud" },
     { label: "Interests",      value: "Electronics & Robotics" },
-    { label: "Portfolio",      value: "uvish.github.io" },
+    // { label: "Portfolio",      value: "uvish.github.io" },
     { label: "LinkedIn",       value: "linkedin.com/in/uvish" },
   ],
 
