@@ -15,7 +15,7 @@ const PORTFOLIO = {
 
   /* ── Links ─────────────────────────────────── */
   links: {
-    linkedin: "https://linkedin.com/in/uvish",
+    linkedin: "https://linkedin.com/in/uvish66",
     github:   "https://github.com/uvish",
     website:  "https://ujjwalv.uk",
     email:    "uvish66@gmail.com",      
