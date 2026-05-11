@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<script src="data.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────
+   DISHONORED-INSPIRED PALETTE
+   Reference: Dunwall's desaturated, cold
+   Victorian palette — iron, fog, muted teal,
+   aged paper, oxidised copper.
+   No bright or saturated colours.
+───────────────────────────────────────── */
+:root {
+  /* Backgrounds — deep charcoal with a blue-green undertone */
+  --bg-0:   #090C0F;   /* deepest — hero, footer */
+  --bg-1:   #0D1117;   /* base body */
+  --bg-2:   #111820;   /* section alt */
+  --bg-3:   #161E28;   /* card / dossier */
+  --bg-4:   #1C2530;   /* hover tint */
+
+  /* Stone / Iron — structural neutrals */
+  --iron:   #2E3B48;
+  --slate:  #3D4F5E;
+  --ash:    #5C6F7E;
+
+  /* Text */
+  --text-0: #D8CFBC;   /* primary — aged ivory, not pure white */
+  --text-1: #9AA5B0;   /* secondary — cold mist */
+  --text-2: #5E7080;   /* tertiary / labels */
+
+  /* Accent — oxidised teal, like corroded copper in lamplight */
+  --teal:   #5E9E88;   /* main accent — muted, professional */
+  --teal-d: #3A6658;   /* darker / hover */
+  --teal-l: #8DC4AE;   /* lighter / highlight */
+
+  /* Secondary accent — Outsider blue-grey, very desaturated */
+  --blue:   #4E7A9A;
+  --blue-d: #2E4A62;
+
+  /* Rule / border */
+  --rule:   rgba(94,158,136,0.12);
+  --rule-strong: rgba(94,158,136,0.22);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-1);
+  color: var(--text-0);
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* Subtle atmospheric vignette overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 10% 15%, rgba(94,158,136,0.035) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 55% at 90% 85%, rgba(78,122,154,0.025) 0%, transparent 65%);
+}
+
+/* Fine film grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9997; pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+}
+
+/* ─── NAV ─────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 1.1rem 5vw;
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(to bottom, rgba(9,12,15,0.96) 55%, transparent);
+  border-bottom: 1px solid rgba(94,158,136,0.07);
+}
+#nav-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--teal-d); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-2); text-decoration: none; transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--teal); }
+
+/* ─── HERO ─────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 0 10vw;
+  position: relative; overflow: hidden;
+  background: var(--bg-0);
+}
+
+/* Hero illustration canvas */
+#hero-canvas {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 55%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  animation: rise 1.8s ease 1.1s forwards;
+}
+
+/* Fog floor */
+.fog {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 260px;
+  background: linear-gradient(to top, rgba(9,12,15,0.96) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 600px; }
+
+.hero-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--teal-d); margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 0.9rem;
+  opacity: 0; animation: rise 0.9s ease 0.35s forwards;
+}
+.hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--teal-d); }
+
+#hero-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.6rem, 5.8vw, 5rem);
+  font-weight: 600; line-height: 1.04; color: var(--text-0);
+  opacity: 0; animation: rise 0.9s ease 0.55s forwards;
+}
+#hero-name span {
+  display: block; font-family: 'IM Fell English', serif;
+  font-style: italic; font-size: 0.4em; font-weight: 400;
+  color: var(--teal); letter-spacing: 0.1em; margin-top: 0.4em;
+}
+
+#hero-tagline {
+  margin-top: 1.6rem; font-style: italic;
+  font-size: 1.05rem; color: var(--text-1);
+  max-width: 420px; line-height: 1.85;
+  opacity: 0; animation: rise 0.9s ease 0.75s forwards;
+}
+
+.hero-cta {
+  margin-top: 2.6rem; display: flex; gap: 1.6rem; align-items: center;
+  opacity: 0; animation: rise 0.9s ease 0.95s forwards;
+}
+.btn-primary {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--bg-0); background: var(--teal);
+  padding: 0.78rem 1.7rem; text-decoration: none;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--teal-l); transform: translateY(-2px); }
+.btn-ghost {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue); text-decoration: none;
+  display: flex; align-items: center; gap: 0.4rem;
+  border-bottom: 1px solid rgba(78,122,154,0.28);
+  padding-bottom: 2px; transition: color 0.3s, border-color 0.3s;
+}
+.btn-ghost::after { content: '↗'; }
+.btn-ghost:hover { color: #7AAAC8; border-color: rgba(78,122,154,0.55); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── DIVIDER ──────────────────────────────── */
+.divider {
+  display: flex; align-items: center; gap: 1.8rem;
+  padding: 0 10vw;
+}
+.divider-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--rule-strong), transparent);
+}
+.divider-glyph {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem; letter-spacing: 0.55em;
+  color: rgba(94,158,136,0.2); white-space: nowrap;
+}
+
+/* ─── SECTIONS ─────────────────────────────── */
+section { padding: 6.5rem 10vw; }
+
+.section-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--teal-d); margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.section-label::before { content: '§'; color: var(--blue-d); font-size: 0.72rem; }
+
+h2.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600; color: var(--text-0);
+  margin-bottom: 3rem; line-height: 1.25;
+}
+
+/* ─── ABOUT ─────────────────────────────────── */
+#about { background: var(--bg-2); }
+
+.about-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5.5rem; align-items: start;
+}
+.about-text p {
+  color: var(--text-1); font-style: italic;
+  margin-bottom: 1.3rem; font-size: 1.02rem;
+}
+.about-text p strong { color: var(--text-0); font-style: normal; font-weight: 400; }
+
+.accent-rule {
+  margin: 2rem 0;
+  display: flex; align-items: center; gap: 1rem;
+}
+.accent-rule::before, .accent-rule::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(78,122,154,0.18), transparent);
+}
+.accent-glyph { font-size: 0.85rem; color: rgba(78,122,154,0.28); letter-spacing: 0.5em; }
+
+/* Dossier table */
+.dossier {
+  border: 1px solid var(--rule);
+  background: var(--bg-3);
+}
+.dossier-row {
+  display: grid; grid-template-columns: 88px 1fr; gap: 1rem;
+  padding: 0.82rem 1.3rem;
+  border-bottom: 1px solid rgba(94,158,136,0.07);
+  transition: background 0.2s;
+}
+.dossier-row:last-child { border-bottom: none; }
+.dossier-row:hover { background: var(--bg-4); }
+.d-key {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.57rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--teal-d); padding-top: 3px;
+}
+.d-val { font-family: 'IM Fell English', serif; font-size: 0.93rem; color: var(--text-0); }
+
+/* ─── SKILLS ────────────────────────────────── */
+#skills { background: var(--bg-1); }
+
+#skills-grid { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.skill-group {}
+.skill-group-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.57rem; letter-spacing: 0.4em; text-transform: uppercase;
+  color: rgba(78,122,154,0.45); margin-bottom: 0.9rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.08em;
+  color: var(--text-1);
+  padding: 0.38rem 0.9rem;
+  border: 1px solid rgba(94,158,136,0.13);
+  position: relative; overflow: hidden;
+  cursor: default; transition: color 0.3s, border-color 0.3s;
+}
+.skill-tag::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(94,158,136,0.04);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.skill-tag:hover { color: var(--teal-l); border-color: rgba(94,158,136,0.28); }
+.skill-tag:hover::before { transform: scaleX(1); }
+
+/* ─── PROJECTS ──────────────────────────────── */
+#projects { background: var(--bg-2); }
+
+#projects-list { display: flex; flex-direction: column; }
+
+.project-item {
+  display: grid; grid-template-columns: 52px 1fr auto;
+  gap: 0 2.2rem; align-items: start;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(94,158,136,0.08);
+  position: relative; transition: background 0.25s;
+}
+.project-item::before {
+  content: '';
+  position: absolute; left: -10vw; right: -10vw; top: 0; bottom: 0;
+  background: rgba(94,158,136,0.02);
+  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.project-item:hover::before { opacity: 1; }
+.project-item:first-child { border-top: 1px solid rgba(94,158,136,0.08); }
+
+.proj-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem; color: var(--teal-d); letter-spacing: 0.2em; padding-top: 4px;
+}
+.proj-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem; font-weight: 600; color: var(--text-0);
+  margin-bottom: 0.45rem; line-height: 1.3;
+  transition: color 0.3s;
+}
+.project-item:hover .proj-title { color: var(--teal-l); }
+.proj-desc { font-style: italic; font-size: 0.93rem; color: var(--text-1); line-height: 1.7; }
+.proj-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(78,122,154,0.45); text-decoration: none;
+  padding-top: 5px; white-space: nowrap;
+  display: flex; align-items: center; gap: 0.35rem;
+  transition: color 0.3s;
+}
+.proj-link::after { content: '↗'; }
+.proj-link:hover { color: var(--blue); }
+
+/* ─── CONTACT ───────────────────────────────── */
+#contact {
+  background: var(--bg-0);
+  text-align: center; position: relative; overflow: hidden;
+}
+#contact::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 72px;
+  background: linear-gradient(to bottom, transparent, rgba(94,158,136,0.22));
+}
+.contact-inner { position: relative; z-index: 1; max-width: 520px; margin: 0 auto; }
+#contact-sub {
+  font-style: italic; color: var(--text-1); font-size: 1rem;
+  line-height: 1.9; margin-bottom: 2.8rem;
+}
+.contact-row {
+  display: flex; justify-content: center; gap: 3.5rem; flex-wrap: wrap;
+}
+.contact-node { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; text-decoration: none; transition: transform 0.3s; }
+.contact-node:hover { transform: translateY(-4px); }
+.cnode-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid rgba(94,158,136,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+  color: var(--teal-d); background: rgba(94,158,136,0.03);
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+.contact-node:hover .cnode-icon {
+  border-color: rgba(94,158,136,0.4); color: var(--teal);
+  background: rgba(94,158,136,0.07);
+}
+.cnode-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--text-2); transition: color 0.3s;
+}
+.contact-node:hover .cnode-label { color: var(--teal-d); }
+
+/* ─── FOOTER ────────────────────────────────── */
+footer {
+  padding: 1.6rem 10vw;
+  border-top: 1px solid rgba(94,158,136,0.06);
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.56rem; letter-spacing: 0.22em;
+  color: rgba(94,158,136,0.22);
+}
+
+/* ─── SCROLL REVEAL ─────────────────────────── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.85s ease, transform 0.85s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 5vw; }
+  .nav-links { display: none; }
+  section { padding: 4.5rem 6vw; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .arch { display: none; }
+  #hero { padding: 0 6vw; }
+  .project-item { grid-template-columns: 40px 1fr; }
+  .proj-link { display: none; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .divider { padding: 0 6vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a id="nav-name" href="#"></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="fog"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow" id="hero-eyebrow"></div>
+    <h1 id="hero-name"></h1>
+    <p id="hero-tagline"></p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a id="hero-contact-btn" href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">✦ &nbsp; I I I &nbsp; ✦</div><div class="divider-line"></div></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Profile</div>
+  <h2 class="section-title">About</h2>
+  <div class="about-grid">
+    <div class="about-text reveal" id="about-text"></div>
+    <div class="reveal" style="transition-delay:0.12s;">
+      <div class="dossier" id="dossier"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">✦ &nbsp; I I I &nbsp; ✦</div><div class="divider-line"></div></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Expertise</div>
+  <h2 class="section-title">Skills &amp; Craft</h2>
+  <div id="skills-grid" class="reveal"></div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">✦ &nbsp; I I I &nbsp; ✦</div><div class="divider-line"></div></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <h2 class="section-title">Projects</h2>
+  <div id="projects-list"></div>
+</section>
+
+<div class="divider" style="padding-top:2rem;padding-bottom:2rem;"><div class="divider-line"></div><div class="divider-glyph">✦ &nbsp; I I I &nbsp; ✦</div><div class="divider-line"></div></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center;">Contact</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p id="contact-sub" class="reveal"></p>
+    <div class="contact-row reveal" id="contact-row" style="transition-delay:0.12s;"></div>
+  </div>
+</section>
+
+<footer>
+  <p id="footer-left"></p>
+  <p id="footer-right"></p>
+</footer>
+
+<!-- Hero Dishonored-style illustration canvas -->
+<script>
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth  * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); });
+
+  /* Fog layers drifting slowly */
+  const fogBanks = Array.from({length: 22}, () => ({
+    x: Math.random(), y: 0.5 + Math.random() * 0.55,
+    r: 80 + Math.random() * 180,
+    a: 0.012 + Math.random() * 0.032,
+    spd: 0.00004 + Math.random() * 0.00009,
+    ph: Math.random() * Math.PI * 2,
+  }));
+
+  /* Floating cinder / ash particles */
+  const cinders = Array.from({length: 28}, () => ({
+    x: Math.random(), y: Math.random(),
+    r: 0.5 + Math.random() * 1.5,
+    vx: (Math.random()-0.5)*0.00015,
+    vy: -(0.00008 + Math.random()*0.00012),
+    a: 0.3 + Math.random()*0.5,
+    flicker: Math.random()*Math.PI*2,
+  }));
+
+  let t = 0;
+
+  function draw() {
+    const W = canvas.offsetWidth;
+    const H = canvas.offsetHeight;
+    if(W===0||H===0){t+=0.5;requestAnimationFrame(draw);return;}
+    ctx.clearRect(0, 0, W, H);
+
+    /* ── Sky gradient — Peyravernay's dark ochre-to-ink palette ── */
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0,   '#050709');
+    sky.addColorStop(0.35,'#0A0E14');
+    sky.addColorStop(0.65,'#0D1219');
+    sky.addColorStop(1,   '#060A0F');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    /* ── Warm ochre moon-behind-clouds glow ── */
+    const moonX = W*0.72, moonY = H*0.22;
+    const moonG = ctx.createRadialGradient(moonX, moonY, 0, moonX, moonY, W*0.42);
+    moonG.addColorStop(0,   'rgba(180,140,60,0.09)');
+    moonG.addColorStop(0.3, 'rgba(140,100,40,0.05)');
+    moonG.addColorStop(1,   'transparent');
+    ctx.fillStyle = moonG;
+    ctx.fillRect(0,0,W,H);
+
+    /* moon disc — partially obscured, Peyravernay style */
+    ctx.save();
+    ctx.globalAlpha = 0.55 + 0.08*Math.sin(t*0.004);
+    ctx.beginPath(); ctx.arc(moonX, moonY, 34, 0, Math.PI*2);
+    const moonFill = ctx.createRadialGradient(moonX-8, moonY-8, 2, moonX, moonY, 34);
+    moonFill.addColorStop(0, 'rgba(220,195,130,0.22)');
+    moonFill.addColorStop(0.6,'rgba(180,150,90,0.12)');
+    moonFill.addColorStop(1, 'rgba(140,110,60,0.06)');
+    ctx.fillStyle = moonFill; ctx.fill();
+    ctx.restore();
+
+    /* ── Painterly background colour wash (Peyravernay's flat planes) ── */
+    /* distant haze band at horizon */
+    const hazeY = H*0.52;
+    const haze = ctx.createLinearGradient(0, hazeY-60, 0, hazeY+80);
+    haze.addColorStop(0, 'transparent');
+    haze.addColorStop(0.5,'rgba(60,50,30,0.06)');
+    haze.addColorStop(1, 'transparent');
+    ctx.fillStyle = haze; ctx.fillRect(0, hazeY-60, W, 140);
+
+    /* ── CITY SILHOUETTE — flat Dishonored-style angular shapes ── */
+    /* Dishonored buildings are TALL, NARROW, ANGULAR with sharp triangular peaks */
+    const ground = H*0.78;
+
+    /* Helper: sharp-peaked spire building */
+    function spireBlock(bx, bw, bh, peakH, shade) {
+      ctx.beginPath();
+      ctx.moveTo(bx, ground);
+      ctx.lineTo(bx, ground-bh);
+      ctx.lineTo(bx + bw*0.5, ground-bh-peakH);
+      ctx.lineTo(bx + bw, ground-bh);
+      ctx.lineTo(bx + bw, ground);
+      ctx.closePath();
+      ctx.fillStyle = shade; ctx.fill();
+    }
+
+    /* Helper: Dishonored-style rectangular block with notched cornice */
+    function block(bx, by, bw, bh, shade) {
+      ctx.fillStyle = shade;
+      ctx.fillRect(bx, by, bw, bh);
+      /* cornice step */
+      ctx.fillStyle = 'rgba(0,0,0,0.4)';
+      ctx.fillRect(bx-3, by, bw+6, 6);
+    }
+
+    /* Helper: thin edge highlight (Peyravernay's stark bright rims) */
+    function edgeLight(x1,y1,x2,y2, alpha) {
+      ctx.strokeStyle = `rgba(180,155,90,${alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+
+    /* Helper: whale-oil tank cylinder */
+    function oilTank(bx, by, bw, bh) {
+      ctx.fillStyle = '#0D1520';
+      ctx.fillRect(bx, by, bw, bh);
+      /* ribs */
+      ctx.strokeStyle = 'rgba(25,38,55,0.9)'; ctx.lineWidth = 1;
+      for(let i=1;i<4;i++){
+        ctx.beginPath();
+        ctx.moveTo(bx, by+bh*(i/4));
+        ctx.lineTo(bx+bw, by+bh*(i/4));
+        ctx.stroke();
+      }
+      /* dome top */
+      ctx.beginPath();
+      ctx.ellipse(bx+bw/2, by, bw/2, bh*0.12, 0, 0, Math.PI*2);
+      ctx.fillStyle='#111E2E'; ctx.fill();
+      edgeLight(bx, by, bx+bw, by, 0.18);
+    }
+
+    /* Helper: gothic arched window slot */
+    function archWin(wx, wy, ww, wh, lit) {
+      const alpha = lit ? (0.5 + 0.15*Math.sin(t*0.03+wx)) : 0.12;
+      const col = lit ? `rgba(180,145,70,${alpha})` : `rgba(60,80,100,0.2)`;
+      ctx.beginPath();
+      ctx.moveTo(wx, wy+wh);
+      ctx.lineTo(wx, wy+wh*0.45);
+      ctx.arc(wx+ww/2, wy+wh*0.45, ww/2, Math.PI, 0);
+      ctx.lineTo(wx+ww, wy+wh);
+      ctx.closePath();
+      ctx.fillStyle = col; ctx.fill();
+      if(lit) {
+        const wg = ctx.createRadialGradient(wx+ww/2,wy+wh*0.6,0, wx+ww/2,wy+wh*0.6,ww*4);
+        wg.addColorStop(0,`rgba(180,145,70,0.10)`);
+        wg.addColorStop(1,'transparent');
+        ctx.fillStyle=wg;
+        ctx.beginPath(); ctx.arc(wx+ww/2, wy+wh*0.6, ww*4, 0, Math.PI*2); ctx.fill();
+      }
+    }
+
+    /* Helper: rectangular window */
+    function rectWin(wx,wy,ww,wh,lit) {
+      const a = lit ? (0.45+0.12*Math.sin(t*0.025+wy)) : 0.1;
+      ctx.fillStyle = lit ? `rgba(175,138,65,${a})` : `rgba(40,60,80,0.18)`;
+      ctx.fillRect(wx,wy,ww,wh);
+    }
+
+    /* ── LAYER 0: distant city wash — near-black ── */
+    ctx.fillStyle = '#080D14';
+    /* distant blocky towers far back */
+    for(let i=0;i<14;i++){
+      const bx = W*(0.05+i*0.068);
+      const bh = H*(0.12+Math.sin(i*1.7)*0.06);
+      ctx.fillRect(bx, ground-bh, W*0.045, bh);
+      if(i%3===0){
+        /* tiny distant spire */
+        ctx.beginPath();
+        ctx.moveTo(bx, ground-bh);
+        ctx.lineTo(bx+W*0.022, ground-bh-H*0.04);
+        ctx.lineTo(bx+W*0.045, ground-bh);
+        ctx.closePath(); ctx.fill();
+      }
+    }
+
+    /* ── LAYER 1: mid-ground industrial buildings ── */
+    /* Left cluster — whale oil refinery */
+    block(W*0.15, ground-H*0.32, W*0.10, H*0.32, '#0C1622');
+    edgeLight(W*0.15, ground-H*0.32, W*0.15, ground, 0.12);
+    oilTank(W*0.17, ground-H*0.42, W*0.06, H*0.12);
+    archWin(W*0.175, ground-H*0.28, W*0.018, H*0.055, true);
+    archWin(W*0.205, ground-H*0.28, W*0.018, H*0.055, false);
+    archWin(W*0.175, ground-H*0.18, W*0.018, H*0.045, false);
+    archWin(W*0.205, ground-H*0.18, W*0.018, H*0.045, true);
+    /* pipe / duct on left */
+    ctx.strokeStyle='#0A1420'; ctx.lineWidth=5;
+    ctx.beginPath(); ctx.moveTo(W*0.15, ground-H*0.2); ctx.lineTo(W*0.12, ground-H*0.2); ctx.stroke();
+    ctx.strokeStyle='rgba(180,155,90,0.08)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(W*0.15, ground-H*0.2); ctx.lineTo(W*0.12, ground-H*0.2); ctx.stroke();
+
+    /* Centre-left tower — tall narrow Dishonored style */
+    block(W*0.28, ground-H*0.52, W*0.07, H*0.52, '#0E1828');
+    edgeLight(W*0.28, ground-H*0.52, W*0.28, ground, 0.16);
+    edgeLight(W*0.28, ground-H*0.52, W*0.35, ground-H*0.52, 0.10);
+    spireBlock(W*0.28, W*0.07, H*0.52, H*0.09, '#0E1828');
+    edgeLight(W*0.315, ground-H*0.61, W*0.28, ground-H*0.52, 0.20);
+    edgeLight(W*0.315, ground-H*0.61, W*0.35, ground-H*0.52, 0.20);
+    archWin(W*0.292, ground-H*0.46, W*0.022, H*0.065, true);
+    archWin(W*0.323, ground-H*0.46, W*0.022, H*0.065, true);
+    archWin(W*0.292, ground-H*0.34, W*0.022, H*0.055, false);
+    archWin(W*0.323, ground-H*0.34, W*0.022, H*0.055, true);
+    rectWin(W*0.292, ground-H*0.22, W*0.02, H*0.04, true);
+    rectWin(W*0.325, ground-H*0.22, W*0.02, H*0.04, false);
+
+    /* ── CENTREPIECE: Dunwall-style tower with whale-oil lamp platform ── */
+    const tx=W*0.44, tw=W*0.085;
+    /* base plinth */
+    ctx.fillStyle='#0B1520';
+    ctx.fillRect(tx-8, ground-H*0.06, tw+16, H*0.06);
+    /* main shaft */
+    block(tx, ground-H*0.72, tw, H*0.72, '#0D1826');
+    edgeLight(tx, ground-H*0.72, tx, ground, 0.22);
+    edgeLight(tx, ground-H*0.72, tx+tw, ground-H*0.72, 0.14);
+    edgeLight(tx+tw, ground-H*0.72, tx+tw, ground, 0.08);
+    /* horizontal banding — Dishonored loves these */
+    for(let b=1;b<5;b++){
+      ctx.fillStyle='rgba(0,0,0,0.35)';
+      ctx.fillRect(tx-4, ground-H*(0.14*b), tw+8, 4);
+      edgeLight(tx-4, ground-H*(0.14*b), tx+tw+4, ground-H*(0.14*b), 0.12);
+    }
+    /* side buttress columns */
+    ctx.fillStyle='#0A1420';
+    ctx.fillRect(tx-10, ground-H*0.55, 10, H*0.55);
+    ctx.fillRect(tx+tw, ground-H*0.55, 10, H*0.55);
+    edgeLight(tx-10, ground-H*0.55, tx-10, ground, 0.14);
+    edgeLight(tx+tw+10, ground-H*0.55, tx+tw+10, ground, 0.08);
+    /* gothic windows — tall, arched */
+    archWin(tx+tw*0.08, ground-H*0.65, tw*0.18, H*0.10, true);
+    archWin(tx+tw*0.52, ground-H*0.65, tw*0.18, H*0.10, false);
+    archWin(tx+tw*0.08, ground-H*0.50, tw*0.18, H*0.09, false);
+    archWin(tx+tw*0.52, ground-H*0.50, tw*0.18, H*0.09, true);
+    archWin(tx+tw*0.08, ground-H*0.36, tw*0.18, H*0.08, true);
+    archWin(tx+tw*0.52, ground-H*0.36, tw*0.18, H*0.08, true);
+    archWin(tx+tw*0.08, ground-H*0.22, tw*0.18, H*0.07, false);
+    archWin(tx+tw*0.52, ground-H*0.22, tw*0.18, H*0.07, true);
+    /* upper spire — angular, very pointed */
+    ctx.beginPath();
+    ctx.moveTo(tx-6, ground-H*0.72);
+    ctx.lineTo(tx+tw/2, ground-H*0.97);
+    ctx.lineTo(tx+tw+6, ground-H*0.72);
+    ctx.closePath(); ctx.fillStyle='#0D1826'; ctx.fill();
+    edgeLight(tx-6, ground-H*0.72, tx+tw/2, ground-H*0.97, 0.28);
+    edgeLight(tx+tw+6, ground-H*0.72, tx+tw/2, ground-H*0.97, 0.15);
+    /* spire tip glow — whale oil lamp */
+    const tipX=tx+tw/2, tipY=ground-H*0.97;
+    const tipFlicker = 0.7 + 0.3*Math.sin(t*0.06);
+    const tipGlow = ctx.createRadialGradient(tipX,tipY,0,tipX,tipY,W*0.08);
+    tipGlow.addColorStop(0, `rgba(180,145,70,${0.28*tipFlicker})`);
+    tipGlow.addColorStop(0.4,`rgba(140,105,45,${0.10*tipFlicker})`);
+    tipGlow.addColorStop(1,'transparent');
+    ctx.fillStyle=tipGlow; ctx.fillRect(0,0,W,H);
+    ctx.beginPath(); ctx.arc(tipX,tipY,3,0,Math.PI*2);
+    ctx.fillStyle=`rgba(220,185,100,${0.9*tipFlicker})`; ctx.fill();
+
+    /* ── RIGHT: more towers and the whale processing facility ── */
+    block(W*0.57, ground-H*0.38, W*0.08, H*0.38, '#0C1622');
+    edgeLight(W*0.57, ground-H*0.38, W*0.57, ground, 0.14);
+    spireBlock(W*0.57, W*0.08, H*0.38, H*0.06, '#0C1622');
+    edgeLight(W*0.61, ground-H*0.44, W*0.57, ground-H*0.38, 0.18);
+    archWin(W*0.582, ground-H*0.32, W*0.024, H*0.07, true);
+    archWin(W*0.614, ground-H*0.32, W*0.024, H*0.07, false);
+    archWin(W*0.582, ground-H*0.20, W*0.024, H*0.06, false);
+    archWin(W*0.614, ground-H*0.20, W*0.024, H*0.06, true);
+
+    /* industrial whale plant — flat wide low */
+    block(W*0.67, ground-H*0.25, W*0.16, H*0.25, '#0A1520');
+    edgeLight(W*0.67, ground-H*0.25, W*0.83, ground-H*0.25, 0.16);
+    oilTank(W*0.69, ground-H*0.36, W*0.045, H*0.13);
+    oilTank(W*0.745, ground-H*0.34, W*0.04, H*0.11);
+    oilTank(W*0.795, ground-H*0.32, W*0.035, H*0.09);
+    /* pipe network */
+    ctx.strokeStyle='#0A1420'; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(W*0.712, ground-H*0.23); ctx.lineTo(W*0.765, ground-H*0.23); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(W*0.765, ground-H*0.23); ctx.lineTo(W*0.765, ground-H*0.27); ctx.stroke();
+    ctx.strokeStyle='rgba(180,155,90,0.07)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(W*0.712, ground-H*0.23); ctx.lineTo(W*0.81, ground-H*0.23); ctx.stroke();
+    rectWin(W*0.682, ground-H*0.18, W*0.022, H*0.04, false);
+    rectWin(W*0.712, ground-H*0.18, W*0.022, H*0.04, true);
+    rectWin(W*0.742, ground-H*0.18, W*0.022, H*0.04, false);
+    rectWin(W*0.772, ground-H*0.18, W*0.022, H*0.04, true);
+
+    /* far right tower */
+    block(W*0.86, ground-H*0.44, W*0.06, H*0.44, '#0D1826');
+    spireBlock(W*0.86, W*0.06, H*0.44, H*0.07, '#0D1826');
+    edgeLight(W*0.86, ground-H*0.44, W*0.86, ground, 0.10);
+    edgeLight(W*0.89, ground-H*0.51, W*0.86, ground-H*0.44, 0.16);
+    archWin(W*0.868, ground-H*0.38, W*0.022, H*0.07, true);
+    archWin(W*0.868, ground-H*0.26, W*0.022, H*0.06, false);
+
+    /* ── OUTSIDER'S MARK — the eye / brand symbol, drawn faintly ── */
+    /* Dishonored's key icon: diamond eye with radiating lines from iris */
+    const markX = W*0.88, markY = H*0.14;
+    const markA = 0.06 + 0.02*Math.sin(t*0.02);
+    ctx.save(); ctx.globalAlpha = markA;
+    const markR = W*0.028;
+    /* outer diamond */
+    ctx.beginPath();
+    ctx.moveTo(markX, markY-markR*1.8);
+    ctx.lineTo(markX+markR*1.1, markY);
+    ctx.lineTo(markX, markY+markR*1.8);
+    ctx.lineTo(markX-markR*1.1, markY);
+    ctx.closePath();
+    ctx.strokeStyle='rgba(94,158,136,0.6)'; ctx.lineWidth=0.8; ctx.stroke();
+    /* iris circle */
+    ctx.beginPath(); ctx.arc(markX, markY, markR*0.7, 0, Math.PI*2);
+    ctx.strokeStyle='rgba(94,158,136,0.7)'; ctx.lineWidth=0.7; ctx.stroke();
+    /* pupil */
+    ctx.beginPath(); ctx.arc(markX, markY, markR*0.22, 0, Math.PI*2);
+    ctx.fillStyle='rgba(94,158,136,0.5)'; ctx.fill();
+    /* radiating lines */
+    for(let r=0;r<8;r++){
+      const angle = (r/8)*Math.PI*2;
+      const r1=markR*0.75, r2=markR*1.55;
+      ctx.beginPath();
+      ctx.moveTo(markX+Math.cos(angle)*r1, markY+Math.sin(angle)*r1);
+      ctx.lineTo(markX+Math.cos(angle)*r2, markY+Math.sin(angle)*r2);
+      ctx.strokeStyle='rgba(94,158,136,0.35)'; ctx.lineWidth=0.5; ctx.stroke();
+    }
+    ctx.restore();
+
+    /* ── GROUND — dark reflective wet stone ── */
+    ctx.fillStyle='#060B12';
+    ctx.fillRect(0, ground, W, H-ground);
+    /* wet street reflection — ochre from lamp tip */
+    const refG = ctx.createLinearGradient(tipX-80, ground, tipX+80, ground);
+    refG.addColorStop(0,'transparent');
+    refG.addColorStop(0.5,`rgba(120,95,40,${0.06*tipFlicker})`);
+    refG.addColorStop(1,'transparent');
+    ctx.fillStyle=refG; ctx.fillRect(0, ground, W, H*0.08);
+    /* ground edge sharp line */
+    ctx.strokeStyle='rgba(180,155,90,0.08)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(0,ground); ctx.lineTo(W,ground); ctx.stroke();
+    /* subtle horizontal street lines */
+    ctx.strokeStyle='rgba(15,25,40,0.7)'; ctx.lineWidth=1;
+    for(let i=1;i<4;i++){
+      ctx.beginPath(); ctx.moveTo(0, ground+H*0.025*i); ctx.lineTo(W, ground+H*0.025*i); ctx.stroke();
+    }
+
+    /* ── LAMP POSTS — whale oil design with curved arm ── */
+    function lampPost(lx, lflick) {
+      const gl = 0.65 + 0.35*Math.sin(t*0.055+lflick);
+      /* pole */
+      ctx.strokeStyle='#1A2838'; ctx.lineWidth=2.5;
+      ctx.beginPath(); ctx.moveTo(lx, ground); ctx.lineTo(lx, ground-H*0.18); ctx.stroke();
+      /* decorative ring */
+      ctx.beginPath(); ctx.arc(lx, ground-H*0.1, 3, 0, Math.PI*2);
+      ctx.fillStyle='#1E3045'; ctx.fill();
+      /* curved arm */
+      ctx.strokeStyle='#1A2838'; ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.moveTo(lx, ground-H*0.16);
+      ctx.bezierCurveTo(lx+15, ground-H*0.19, lx+22, ground-H*0.175, lx+24, ground-H*0.155);
+      ctx.stroke();
+      /* lantern cage */
+      ctx.fillStyle='#1E3248';
+      ctx.fillRect(lx+18, ground-H*0.168, 14, 18);
+      ctx.fillStyle='#0D1828';
+      ctx.fillRect(lx+20, ground-H*0.163, 10, 13);
+      /* glow pool */
+      const lg=ctx.createRadialGradient(lx+25, ground-H*0.155, 0, lx+25, ground-H*0.155, 55);
+      lg.addColorStop(0,`rgba(175,140,60,${0.20*gl})`);
+      lg.addColorStop(0.35,`rgba(140,108,45,${0.07*gl})`);
+      lg.addColorStop(1,'transparent');
+      ctx.fillStyle=lg; ctx.beginPath(); ctx.arc(lx+25, ground-H*0.155, 55, 0, Math.PI*2); ctx.fill();
+      /* ground pool */
+      const gp=ctx.createRadialGradient(lx+10, ground, 0, lx+10, ground, 40);
+      gp.addColorStop(0,`rgba(140,108,45,${0.10*gl})`);
+      gp.addColorStop(1,'transparent');
+      ctx.fillStyle=gp; ctx.beginPath(); ctx.arc(lx+10, ground, 40, 0, Math.PI*2); ctx.fill();
+    }
+    lampPost(W*0.24, 0);
+    lampPost(W*0.50, 1.8);
+    lampPost(W*0.75, 3.4);
+
+    /* ── FOG drifting at street level ── */
+    fogBanks.forEach(p => {
+      p.ph += p.spd;
+      const px = ((p.x + p.ph*0.25)%1.25 - 0.12)*W;
+      const py = p.y*H + Math.sin(p.ph*1.5)*14;
+      const fg=ctx.createRadialGradient(px,py,0,px,py,p.r);
+      fg.addColorStop(0,`rgba(8,14,22,${p.a})`);
+      fg.addColorStop(1,'transparent');
+      ctx.fillStyle=fg; ctx.beginPath(); ctx.arc(px,py,p.r,0,Math.PI*2); ctx.fill();
+    });
+
+    /* ── CINDERS / ASH drifting upward ── */
+    cinders.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.y<-0.02){p.y=0.92+Math.random()*0.1;p.x=Math.random();}
+      if(p.x<-0.02||p.x>1.02){p.x=Math.random();}
+      const ca = p.a*(0.5+0.5*Math.sin(t*0.08+p.flicker));
+      ctx.beginPath(); ctx.arc(p.x*W, p.y*H, p.r, 0, Math.PI*2);
+      ctx.fillStyle=`rgba(180,150,70,${ca*0.35})`; ctx.fill();
+    });
+
+    /* ── Vignette: fade left edge into page bg so text sits cleanly ── */
+    const vl=ctx.createLinearGradient(0,0,W*0.35,0);
+    vl.addColorStop(0,'rgba(9,12,15,1)');
+    vl.addColorStop(0.7,'rgba(9,12,15,0.3)');
+    vl.addColorStop(1,'transparent');
+    ctx.fillStyle=vl; ctx.fillRect(0,0,W*0.35,H);
+
+    /* top vignette */
+    const vt=ctx.createLinearGradient(0,0,0,H*0.10);
+    vt.addColorStop(0,'rgba(5,7,9,0.9)');
+    vt.addColorStop(1,'transparent');
+    ctx.fillStyle=vt; ctx.fillRect(0,0,W,H*0.10);
+
+    /* bottom vignette */
+    const vb=ctx.createLinearGradient(0,H*0.88,0,H);
+    vb.addColorStop(0,'transparent');
+    vb.addColorStop(1,'rgba(6,10,15,0.95)');
+    ctx.fillStyle=vb; ctx.fillRect(0,H*0.88,W,H*0.12);
+
+    t+=0.5;
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
+</script>
+
+<!-- Cursor glow -->
+<script>
+(function(){
+  const orbs=[];
+  for(let i=0;i<5;i++){
+    const d=document.createElement('div');
+    const s=9-i*1.4;
+    d.style.cssText=`position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:rgba(94,158,136,${0.11-i*0.018});pointer-events:none;z-index:9996;transform:translate(-50%,-50%);transition:left ${0.04+i*0.04}s,top ${0.04+i*0.04}s;`;
+    document.body.appendChild(d);orbs.push(d);
+  }
+  document.addEventListener('mousemove',e=>{orbs.forEach(o=>{o.style.left=e.clientX+'px';o.style.top=e.clientY+'px';});});
+})();
+</script>
+
+<!-- Render from PORTFOLIO data -->
+<script>
+(function(){
+  const d = PORTFOLIO;
+
+  /* NAV */
+  document.getElementById('nav-name').textContent =
+    d.name.first[0] + ' · ' + d.name.last[0] + ' · ' + d.title.split(' ')[0];
+
+  /* HERO */
+  document.getElementById('hero-eyebrow').innerHTML =
+    '<span></span>' + d.title;
+  const heroName = document.getElementById('hero-name');
+  heroName.innerHTML = d.name.first + '<br>' + d.name.last +
+    '<span>' + (d.tagline.split('.')[0].trim()) + '</span>';
+  document.getElementById('hero-tagline').textContent = d.tagline;
+
+  /* ABOUT TEXT */
+  const aboutEl = document.getElementById('about-text');
+  d.bio.forEach(para => {
+    const p = document.createElement('p');
+    p.innerHTML = para;
+    aboutEl.appendChild(p);
+  });
+  const rule = document.createElement('div');
+  rule.className = 'accent-rule';
+  rule.innerHTML = '<div class="accent-glyph">Ω &nbsp; ※ &nbsp; Ω</div>';
+  aboutEl.appendChild(rule);
+
+  /* DOSSIER */
+  const dossierEl = document.getElementById('dossier');
+  d.dossier.forEach(row => {
+    dossierEl.innerHTML += `<div class="dossier-row"><span class="d-key">${row.label}</span><span class="d-val">${row.value}</span></div>`;
+  });
+
+  /* SKILLS */
+  const skillsEl = document.getElementById('skills-grid');
+  d.skills.forEach((group, i) => {
+    const div = document.createElement('div');
+    div.className = 'skill-group reveal';
+    if (i > 0) div.style.transitionDelay = (i * 0.1) + 's';
+    div.innerHTML = `<div class="skill-group-title">// ${group.category}</div>
+      <div class="skill-tags">${group.items.map(s=>`<div class="skill-tag">${s}</div>`).join('')}</div>`;
+    skillsEl.appendChild(div);
+  });
+
+  /* PROJECTS */
+  const projEl = document.getElementById('projects-list');
+  d.projects.forEach((proj, i) => {
+    const el = document.createElement('div');
+    el.className = 'project-item reveal';
+    if (i > 0) el.style.transitionDelay = (i * 0.07) + 's';
+    el.innerHTML = `
+      <div class="proj-num">${String(i+1).padStart(2,'0')}</div>
+      <div>
+        <div class="proj-title">${proj.title}</div>
+        <p class="proj-desc">${proj.description}</p>
+      </div>
+      ${proj.url ? `<a href="${proj.url}" target="_blank" class="proj-link">View</a>` : ''}`;
+    projEl.appendChild(el);
+  });
+
+  /* CONTACT */
+  document.getElementById('contact-sub').innerHTML =
+    'Open to collaboration, new opportunities,<br>and interesting conversations.';
+
+  const contactRow = document.getElementById('contact-row');
+  const contactItems = [];
+  if (d.links.linkedin) contactItems.push({ href: d.links.linkedin, icon: 'in', label: 'LinkedIn' });
+  if (d.links.github)   contactItems.push({ href: d.links.github,   icon: '</>', label: 'GitHub' });
+  if (d.links.website)  contactItems.push({ href: d.links.website,  icon: '✦',  label: 'Website' });
+  if (d.links.email)    contactItems.push({ href: 'mailto:'+d.links.email, icon: '@', label: 'Email' });
+
+  contactItems.forEach(item => {
+    contactRow.innerHTML += `
+      <a href="${item.href}" target="_blank" class="contact-node">
+        <div class="cnode-icon">${item.icon}</div>
+        <div class="cnode-label">${item.label}</div>
+      </a>`;
+  });
+
+  /* FOOTER */
+  document.getElementById('footer-left').textContent =
+    '© ' + new Date().getFullYear() + '  ' + d.name.first + ' ' + d.name.last;
+  document.getElementById('footer-right').textContent = d.footer;
+
+  /* SCROLL REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => io.observe(el));
+
+})();
+</script>
+
+</body>
+</html>

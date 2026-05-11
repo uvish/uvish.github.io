@@ -1,59 +1,1089 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Ujjwal Vishwakarma</title>
-       
-       
-        <link rel="stylesheet" href="style.css">
-        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> -->
-    </head>
-    <body>
-    <div class="logo">&lt;/&gt;</div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Ujjwal Vishwakarma</title>
+<script src="data.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600&family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
+<style>
 
-    <div class="text">
-        <div class="text1">Hey ,I’m Ujjwal</div>
-        <div class="text2">A Software Engineer, Electronics & Robotics enthusiast</div>
-        <div class="text3">I like to see my code turn gears ⚙.</div>
-     </div>
-   
-    <div class="mid_section container">
-        <div class="skills_text">Skills</div>
-        <div class="skills row">
-            <div class="skill_box col"><img src="img/skill1.png"></div>
-            <div class="skill_box col"><img src="img/skill2.png"></div>
-            <div class="skill_box col"><img src="img/skill3.png"></div>
-            <div class="skill_box col"><img src="img/skill4.png"></div>
-            <div class="skill_box col"><img src="img/skill5.png"></div>
-            <div class="skill_box col"><img src="img/skill6.png"></div>
-        </div>
-        
-    </div>
-    <div class="projects_section">
-        <div class="projects_text">Projects</div>
-        <div class="projects">
-            <div class="project_box javascript"><p>TheTrace.in</p></div>
-            <div class="project_box android"><p>Search Plus</p></div>
-            <div class="project_box matlab"><p>AESA Radar Beam Error Correction</p></div>
-            <div class="project_box android"><p>Doc Scanner</p></div>
-            <div class="project_box android"><p>IMX</p></div>
-            <div class="project_box javascript"><p>Web Image Editor</p></div>
-        </div>
-    </div>
+/* ─────────────────────────────────────────────
+   PORTAL 2 / APERTURE SCIENCE PALETTE
+   Core: concrete white, deep black, orange portal,
+   blue portal, cold fluorescent white.
+   Reference: test chamber panels, GLaDOS rig,
+   Aperture UI, warning stripes.
+───────────────────────────────────────────── */
+:root {
+  /* Backgrounds — concrete, institutional */
+  --bg-0:   #0A0A0C;   /* deepest black */
+  --bg-1:   #0F0F12;   /* body */
+  --bg-2:   #141418;   /* panel surface */
+  --bg-3:   #1A1A1F;   /* card */
+  --bg-4:   #1F1F26;   /* hover */
+  --panel:  #E8E6E0;   /* aperture white panel */
+  --panel-d:#CFCCC4;   /* darker panel */
 
-    <div class="contacts">
-        
-        <img class="img_foot" src="img.png">
-        <div class="contact_text">CONTACT</div>
-       
-        <div class="gmail contact_box" onclick="window.location.href='https://mailto:uvish66@gmail.com';"></div>
-        <div class="linkdin contact_box"  onclick="window.location.href='https://www.linkedin.com/in/uvish66/';"></div>
-        <div class="instagram contact_box"  onclick="window.location.href='https://www.instagram.com/uvish66/';" ></div>
-        <div class="github contact_box"  onclick="window.location.href='https://github.com/uvish/';"></div>
-        <div class="reddit contact_box"  onclick="window.location.href='https://www.reddit.com/user/uvish66';"></div>
-    </div>  
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> 
-    </body>
+  /* Portal colours — the two portals */
+  --orange:  #F4812A;  /* orange portal */
+  --orange-d:#C45E18;  /* darker orange */
+  --orange-l:#FAB070;  /* lighter orange */
+  --blue:    #3BA8D4;  /* blue portal */
+  --blue-d:  #1E6E96;  /* darker blue */
+  --blue-l:  #7FD0F0;  /* lighter blue */
+
+  /* Text */
+  --text-0:  #E8E6E0;  /* primary — aperture white */
+  --text-1:  #9898A8;  /* secondary — cold grey */
+  --text-2:  #555568;  /* tertiary */
+  --text-inv:#0A0A0C;  /* text on light bg */
+
+  /* Rules */
+  --rule-o:  rgba(244,129,42,0.18);
+  --rule-b:  rgba(59,168,212,0.18);
+  --rule:    rgba(232,230,224,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-1);
+  color: var(--text-0);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* Subtle scanline overlay — Aperture terminal feel */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.04) 2px,
+    rgba(0,0,0,0.04) 4px
+  );
+}
+
+/* Aperture grid — very faint panel lines */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9997; pointer-events: none;
+  opacity: 0.018;
+  background-image:
+    linear-gradient(rgba(232,230,224,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,230,224,1) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 0 5vw;
+  height: 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10,10,12,0.96);
+  border-bottom: 1px solid var(--rule-o);
+}
+
+/* Aperture warning stripe on nav top edge */
+nav::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--orange) 0px, var(--orange) 24px,
+    var(--bg-0) 24px, var(--bg-0) 48px
+  );
+  opacity: 0.7;
+}
+
+#nav-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--orange); text-decoration: none;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+#nav-name::before {
+  content: '';
+  display: inline-block; width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--orange);
+  background: radial-gradient(circle at 40% 40%, var(--orange-l), var(--orange-d));
+  opacity: 0.7;
+}
+
+.nav-links { display: flex; gap: 0; list-style: none; }
+.nav-links li { border-left: 1px solid var(--rule); }
+.nav-links a {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-2); text-decoration: none;
+  padding: 0 1.4rem; height: 52px;
+  display: flex; align-items: center;
+  transition: color 0.2s, background 0.2s;
+  border-bottom: 2px solid transparent;
+}
+.nav-links a:hover {
+  color: var(--blue-l);
+  border-bottom-color: var(--blue);
+  background: rgba(59,168,212,0.04);
+}
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 0 10vw;
+  position: relative; overflow: hidden;
+  background: var(--bg-0);
+}
+
+/* Hero canvas — right side */
+#hero-canvas {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 58%; height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  animation: aperture-in 1.6s ease 0.8s forwards;
+}
+
+@keyframes aperture-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Ground line */
+.hero-floor {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 180px;
+  background: linear-gradient(to top, rgba(10,10,12,0.98) 0%, transparent 100%);
+  pointer-events: none; z-index: 1;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 580px; }
+
+.hero-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--orange-d); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  opacity: 0; animation: slide-up 0.8s ease 0.3s forwards;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 32px; height: 1px;
+  background: linear-gradient(to right, var(--orange-d), transparent);
+}
+
+#hero-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500; line-height: 1.08; color: var(--text-0);
+  opacity: 0; animation: slide-up 0.8s ease 0.5s forwards;
+  letter-spacing: 0.04em;
+}
+#hero-name span {
+  display: block;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.38em; font-weight: 300; letter-spacing: 0.15em;
+  color: var(--blue); margin-top: 0.5em; text-transform: uppercase;
+}
+
+#hero-tagline {
+  margin-top: 1.6rem; font-weight: 300;
+  font-size: 1rem; color: var(--text-1);
+  max-width: 400px; line-height: 1.85;
+  letter-spacing: 0.04em;
+  opacity: 0; animation: slide-up 0.8s ease 0.7s forwards;
+}
+
+/* GLaDOS-style test subject ID badge */
+.subject-badge {
+  margin-top: 2rem;
+  display: inline-flex; align-items: center; gap: 1rem;
+  border: 1px solid var(--rule-o);
+  padding: 0.5rem 1rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--orange-d);
+  background: rgba(244,129,42,0.04);
+  opacity: 0; animation: slide-up 0.8s ease 0.85s forwards;
+}
+.subject-badge::before { content: '◈'; font-size: 0.8rem; }
+
+.hero-cta {
+  margin-top: 2rem; display: flex; gap: 1.2rem; align-items: center;
+  opacity: 0; animation: slide-up 0.8s ease 1s forwards;
+}
+.btn-orange {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--bg-0); background: var(--orange);
+  padding: 0.75rem 1.8rem; text-decoration: none;
+  position: relative; overflow: hidden;
+  transition: background 0.25s, transform 0.2s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-orange:hover { background: var(--orange-l); transform: translateY(-2px); }
+.btn-blue {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue); text-decoration: none;
+  display: flex; align-items: center; gap: 0.4rem;
+  border-bottom: 1px solid rgba(59,168,212,0.3);
+  padding-bottom: 2px; transition: color 0.25s, border-color 0.25s;
+}
+.btn-blue::after { content: '→'; }
+.btn-blue:hover { color: var(--blue-l); border-color: rgba(59,168,212,0.6); }
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── SECTION DIVIDER ─── */
+.divider {
+  display: flex; align-items: center;
+  padding: 0 10vw;
+}
+.div-line-o {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--rule-o), transparent);
+}
+.div-line-b {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--rule-b), transparent);
+}
+.div-mid {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.55rem; letter-spacing: 0.5em;
+  color: rgba(244,129,42,0.22); padding: 0 1.2rem; white-space: nowrap;
+}
+
+/* ─── SECTIONS ─── */
+section { padding: 6rem 10vw; }
+
+.section-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--orange-d); margin-bottom: 0.4rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.section-label::before {
+  content: '▸';
+  color: var(--blue-d); font-size: 0.7rem;
+}
+
+h2.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
+  font-weight: 500; color: var(--text-0);
+  margin-bottom: 3rem; letter-spacing: 0.06em;
+}
+
+/* ─── ABOUT ─── */
+#about { background: var(--bg-2); }
+
+/* Panel-wall texture strip at top */
+#about::before {
+  content: '';
+  display: block;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--orange) 0px, var(--orange) 20px,
+    transparent 20px, transparent 22px,
+    var(--blue) 22px, var(--blue) 42px,
+    transparent 42px, transparent 44px
+  );
+  opacity: 0.35;
+  margin: -6rem -10vw 0;
+  margin-bottom: 5rem;
+}
+
+.about-grid {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: start;
+}
+.about-text p {
+  color: var(--text-1); font-weight: 300;
+  margin-bottom: 1.2rem; font-size: 1rem; letter-spacing: 0.03em;
+}
+.about-text p strong { color: var(--text-0); font-weight: 500; }
+
+/* GLaDOS-style annotation */
+.annotation {
+  margin: 1.8rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--orange);
+  background: rgba(244,129,42,0.04);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.08em; line-height: 1.7;
+  color: var(--orange-d);
+}
+
+/* Test subject dossier */
+.dossier {
+  border: 1px solid var(--rule);
+  background: var(--bg-3);
+  position: relative; overflow: hidden;
+}
+/* Corner mark */
+.dossier::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 24px 24px 0 0;
+  border-color: var(--orange) transparent transparent transparent;
+  opacity: 0.5;
+}
+.dossier-row {
+  display: grid; grid-template-columns: 96px 1fr; gap: 1rem;
+  padding: 0.78rem 1.2rem;
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.2s;
+}
+.dossier-row:last-child { border-bottom: none; }
+.dossier-row:hover { background: var(--bg-4); }
+.d-key {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--orange-d); padding-top: 2px;
+}
+.d-val {
+  font-family: 'Rajdhani', sans-serif; font-weight: 500;
+  font-size: 0.92rem; color: var(--text-0); letter-spacing: 0.04em;
+}
+
+/* ─── SKILLS ─── */
+#skills { background: var(--bg-1); }
+
+#skills-grid { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.skill-group {}
+.skill-group-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.57rem; letter-spacing: 0.4em; text-transform: uppercase;
+  color: rgba(59,168,212,0.45); margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.skill-group-title::before { content: '//'; color: var(--blue-d); }
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.skill-tag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.06em;
+  color: var(--text-1);
+  padding: 0.38rem 0.9rem;
+  border: 1px solid rgba(232,230,224,0.1);
+  position: relative; overflow: hidden;
+  cursor: default; transition: color 0.25s, border-color 0.25s;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.skill-tag::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(59,168,212,0.05);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.skill-tag:hover { color: var(--blue-l); border-color: rgba(59,168,212,0.35); }
+.skill-tag:hover::before { transform: scaleX(1); }
+
+/* ─── PROJECTS ─── */
+#projects { background: var(--bg-2); }
+
+#projects-list { display: flex; flex-direction: column; }
+
+.project-item {
+  display: grid; grid-template-columns: 64px 1fr auto;
+  gap: 0 2rem; align-items: start;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative; transition: background 0.2s;
+}
+.project-item::before {
+  content: '';
+  position: absolute; left: -10vw; right: -10vw; top: 0; bottom: 0;
+  background: rgba(244,129,42,0.02);
+  opacity: 0; transition: opacity 0.25s; pointer-events: none;
+}
+.project-item:hover::before { opacity: 1; }
+.project-item:first-child { border-top: 1px solid var(--rule); }
+
+/* Test chamber number badge */
+.proj-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.12em; padding-top: 4px;
+  color: var(--orange-d);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+}
+.proj-num::before {
+  content: 'No.';
+  font-size: 0.48rem; letter-spacing: 0.2em; color: var(--text-2);
+}
+
+.proj-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem; font-weight: 500; color: var(--text-0);
+  margin-bottom: 0.4rem; line-height: 1.3; letter-spacing: 0.06em;
+  transition: color 0.25s;
+}
+.project-item:hover .proj-title { color: var(--orange-l); }
+.proj-desc {
+  font-weight: 300; font-size: 0.93rem; color: var(--text-1);
+  line-height: 1.7; letter-spacing: 0.02em;
+}
+.proj-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(59,168,212,0.5); text-decoration: none;
+  padding-top: 5px; white-space: nowrap;
+  display: flex; align-items: center; gap: 0.35rem;
+  transition: color 0.25s;
+}
+.proj-link::after { content: '↗'; }
+.proj-link:hover { color: var(--blue-l); }
+
+/* ─── CONTACT ─── */
+#contact {
+  background: var(--bg-0);
+  text-align: center; position: relative; overflow: hidden;
+}
+
+/* Aperture bottom warning stripe */
+#contact::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--orange) 0px, var(--orange) 20px,
+    var(--bg-0) 20px, var(--bg-0) 40px
+  );
+  opacity: 0.5;
+}
+
+/* Portal ring decoration */
+#contact::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 500px; height: 500px; border-radius: 50%;
+  border: 1px solid rgba(59,168,212,0.04);
+  pointer-events: none;
+}
+
+.contact-inner { position: relative; z-index: 1; max-width: 520px; margin: 0 auto; }
+#contact-sub {
+  font-weight: 300; color: var(--text-1); font-size: 1rem;
+  line-height: 1.9; margin-bottom: 2.8rem; letter-spacing: 0.03em;
+}
+
+.contact-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+
+.contact-node { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; text-decoration: none; transition: transform 0.25s; }
+.contact-node:hover { transform: translateY(-4px); }
+
+.cnode-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(244,129,42,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+  color: var(--orange-d);
+  background: rgba(244,129,42,0.04);
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+  position: relative;
+}
+/* Portal ring glow on hover */
+.cnode-icon::before {
+  content: '';
+  position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid transparent;
+  transition: border-color 0.25s;
+}
+.contact-node:hover .cnode-icon {
+  border-color: rgba(244,129,42,0.6);
+  color: var(--orange); background: rgba(244,129,42,0.08);
+}
+.contact-node:hover .cnode-icon::before { border-color: rgba(244,129,42,0.2); }
+
+.cnode-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--text-2); transition: color 0.25s;
+}
+.contact-node:hover .cnode-label { color: var(--orange-d); }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 1.4rem 10vw;
+  border-top: 1px solid var(--rule-o);
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.56rem; letter-spacing: 0.22em;
+  color: rgba(244,129,42,0.25);
+}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  nav { padding: 0 5vw; }
+  .nav-links { display: none; }
+  section { padding: 4rem 6vw; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  #hero { padding: 0 6vw; }
+  #hero-canvas { width: 100%; opacity: 0.25; }
+  .project-item { grid-template-columns: 52px 1fr; }
+  .proj-link { display: none; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .divider { padding: 0 6vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a id="nav-name" href="#"></a>
+  <ul class="nav-links">
+    <li><a href="#about">Profile</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-floor"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow" id="hero-eyebrow"></div>
+    <h1 id="hero-name"></h1>
+    <p id="hero-tagline"></p>
+    <div class="subject-badge" id="subject-badge"></div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-orange">View Projects</a>
+      <a href="#contact" class="btn-blue">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="div-line-o"></div>
+  <div class="div-mid">◈ &nbsp; X · X · X &nbsp; ◈</div>
+  <div class="div-line-b"></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Profile</div>
+  <h2 class="section-title">About</h2>
+  <div class="about-grid">
+    <div class="about-text reveal" id="about-text"></div>
+    <div class="reveal" style="transition-delay:0.12s;">
+      <div class="dossier" id="dossier"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="div-line-o"></div>
+  <div class="div-mid">◈ &nbsp; X · X · X &nbsp; ◈</div>
+  <div class="div-line-b"></div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Core Competencies</div>
+  <h2 class="section-title">Skills &amp; Craft</h2>
+  <div id="skills-grid"></div>
+</section>
+
+<div class="divider">
+  <div class="div-line-o"></div>
+  <div class="div-mid">◈ &nbsp; X · X · X &nbsp; ◈</div>
+  <div class="div-line-b"></div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-title">Projects</h2>
+  <div id="projects-list"></div>
+</section>
+
+<div class="divider" style="padding-top:2rem;padding-bottom:2rem;">
+  <div class="div-line-o"></div>
+  <div class="div-mid">◈ &nbsp; X · X · X &nbsp; ◈</div>
+  <div class="div-line-b"></div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center;">Contact</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p id="contact-sub" class="reveal"></p>
+    <div class="contact-row reveal" id="contact-row" style="transition-delay:0.12s;"></div>
+  </div>
+</section>
+
+<footer>
+  <p id="footer-left"></p>
+  <p id="footer-right"></p>
+</footer>
+
+<!-- Portal hero canvas — Aperture Science facility -->
+<script>
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize(){
+    canvas.width  = canvas.offsetWidth  * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* Floating dust particles */
+  const dust = Array.from({length:40}, () => ({
+    x: Math.random(), y: Math.random(),
+    r: 0.4 + Math.random()*1.2,
+    vx: (Math.random()-0.5)*0.00008,
+    vy: -(0.00004+Math.random()*0.00008),
+    a: 0.15+Math.random()*0.35,
+    ph: Math.random()*Math.PI*2,
+  }));
+
+  /* Portal ripple rings */
+  const rings = [
+    {x:0.72, y:0.48, r:0, maxR:0.18, col:'orange', spd:0.0006, a:0.5},
+    {x:0.72, y:0.48, r:0.06, maxR:0.18, col:'orange', spd:0.0006, a:0.35},
+    {x:0.72, y:0.48, r:0.12, maxR:0.18, col:'orange', spd:0.0006, a:0.2},
+  ];
+
+  let t = 0;
+
+  function draw(){
+    const W = canvas.offsetWidth;
+    const H = canvas.offsetHeight;
+    if(W===0||H===0){t++;requestAnimationFrame(draw);return;}
+    ctx.clearRect(0,0,W,H);
+
+    /* ── Background: deep black test chamber void ── */
+    ctx.fillStyle='#070709';
+    ctx.fillRect(0,0,W,H);
+
+    /* ── Far depth — infinite test chamber grid ── */
+    /* vanishing point at centre-right */
+    const vpX = W*0.72, vpY = H*0.50;
+
+    /* Floor grid — perspective */
+    ctx.save();
+    ctx.strokeStyle='rgba(232,230,224,0.028)';
+    ctx.lineWidth=0.5;
+    /* horizontal lines */
+    for(let i=0;i<14;i++){
+      const fy = H*0.52 + i*(H*0.5/14);
+      const t_  = (fy - vpY)/(H - vpY);
+      const x0  = vpX - t_*(vpX - 0);
+      const x1  = vpX + t_*(W - vpX);
+      ctx.beginPath(); ctx.moveTo(x0,fy); ctx.lineTo(x1,fy); ctx.stroke();
+    }
+    /* vertical lines converging to vp */
+    for(let i=0;i<18;i++){
+      const fx = W*0.1 + i*(W*0.9/18);
+      ctx.beginPath(); ctx.moveTo(vpX,vpY); ctx.lineTo(fx,H); ctx.stroke();
+    }
+    ctx.restore();
+
+    /* ── WALL PANELS — Portal 2's signature white modular panels ── */
+    function panel(px,py,pw,ph, lit, damage){
+      /* panel body */
+      ctx.fillStyle = damage ? '#141418' : (lit ? '#1C1C22' : '#141418');
+      ctx.fillRect(px,py,pw,ph);
+      /* panel bevel — top/left bright, bottom/right dark */
+      ctx.strokeStyle='rgba(232,230,224,0.06)'; ctx.lineWidth=1;
+      ctx.strokeRect(px+1,py+1,pw-2,ph-2);
+      ctx.strokeStyle='rgba(0,0,0,0.5)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(px,py+ph); ctx.lineTo(px+pw,py+ph); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px+pw,py); ctx.lineTo(px+pw,py+ph); ctx.stroke();
+      /* light edge on top/left */
+      ctx.strokeStyle='rgba(232,230,224,0.1)'; ctx.lineWidth=0.5;
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px+pw,py); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,py+ph); ctx.stroke();
+      /* damage crack */
+      if(damage){
+        ctx.strokeStyle='rgba(200,180,150,0.12)'; ctx.lineWidth=0.5;
+        ctx.beginPath();
+        ctx.moveTo(px+pw*0.3, py+ph*0.2);
+        ctx.lineTo(px+pw*0.55, py+ph*0.6);
+        ctx.lineTo(px+pw*0.7, py+ph*0.85);
+        ctx.stroke();
+      }
+    }
+
+    /* Left wall panels */
+    const panW = W*0.045, panH = H*0.12;
+    for(let row=0;row<8;row++){
+      for(let col=0;col<3;col++){
+        const dmg = (row===3&&col===1)||(row===5&&col===2)||(row===1&&col===0);
+        panel(W*0.15 + col*(panW+2), H*0.08 + row*(panH+2), panW, panH, row%2===col%2, dmg);
+      }
+    }
+
+    /* Right wall panels */
+    for(let row=0;row<8;row++){
+      for(let col=0;col<3;col++){
+        const dmg = (row===2&&col===0)||(row===6&&col===1);
+        panel(W*0.82 - col*(panW+2), H*0.08 + row*(panH+2), panW, panH, row%2!==col%2, dmg);
+      }
+    }
+
+    /* Ceiling panels strip */
+    for(let col=0;col<22;col++){
+      panel(W*0.12 + col*(panW+1), H*0.02, panW, H*0.055, col%3===0, col===8||col===15);
+    }
+
+    /* Floor panels */
+    for(let col=0;col<22;col++){
+      panel(W*0.12 + col*(panW+1), H*0.88, panW, H*0.055, false, col===5||col===12||col===18);
+    }
+
+    /* ── GLaDOS HANGING RIG — spine + concentric rings ── */
+    const glX = W*0.72, glY = H*0.22;
+
+    /* descent cable from ceiling */
+    const grad = ctx.createLinearGradient(glX, 0, glX, glY);
+    grad.addColorStop(0, 'rgba(232,230,224,0.08)');
+    grad.addColorStop(1, 'rgba(232,230,224,0.25)');
+    ctx.strokeStyle=grad; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(glX, 0); ctx.lineTo(glX, glY-8); ctx.stroke();
+
+    /* concentric ring halo — GLaDOS characteristic */
+    const ringRadii = [62, 50, 38, 26];
+    const ringAlpha = [0.06, 0.10, 0.15, 0.22];
+    ringRadii.forEach((r,i) => {
+      const rot = t*0.004*(i%2===0?1:-1);
+      ctx.save(); ctx.translate(glX,glY); ctx.rotate(rot);
+      ctx.strokeStyle=`rgba(232,230,224,${ringAlpha[i]})`;
+      ctx.lineWidth = 0.6;
+      ctx.beginPath(); ctx.arc(0,0,r,0,Math.PI*2); ctx.stroke();
+      /* tick marks on each ring */
+      const ticks = 8 + i*4;
+      for(let k=0;k<ticks;k++){
+        const a = (k/ticks)*Math.PI*2;
+        const r0=r-3, r1=r+3;
+        ctx.strokeStyle=`rgba(232,230,224,${ringAlpha[i]*1.5})`;
+        ctx.lineWidth=0.5;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a)*r0, Math.sin(a)*r0);
+        ctx.lineTo(Math.cos(a)*r1, Math.sin(a)*r1);
+        ctx.stroke();
+      }
+      ctx.restore();
+    });
+
+    /* spine segments */
+    const spineSegs = 7;
+    for(let s=0;s<spineSegs;s++){
+      const sy = glY + s*18;
+      const sw = 22 - s*2;
+      ctx.fillStyle=`rgba(30,30,38,${0.9-s*0.05})`;
+      ctx.fillRect(glX-sw/2, sy, sw, 14);
+      ctx.strokeStyle='rgba(232,230,224,0.08)'; ctx.lineWidth=0.5;
+      ctx.strokeRect(glX-sw/2, sy, sw, 14);
+      /* connector pin */
+      ctx.beginPath(); ctx.arc(glX, sy+7, 2.5, 0, Math.PI*2);
+      ctx.fillStyle='rgba(180,180,200,0.3)'; ctx.fill();
+    }
+
+    /* GLaDOS core — the eye */
+    const coreY = glY + spineSegs*18 + 7;
+    const coreFlick = 0.85 + 0.15*Math.sin(t*0.04);
+    /* outer body */
+    ctx.fillStyle='#1A1A22';
+    ctx.beginPath(); ctx.ellipse(glX, coreY, 22, 16, 0, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(232,230,224,0.15)'; ctx.lineWidth=0.8;
+    ctx.beginPath(); ctx.ellipse(glX, coreY, 22, 16, 0, 0, Math.PI*2); ctx.stroke();
+    /* eye glow — changes colour orange/blue slowly */
+    const eyeBlend = (Math.sin(t*0.008)+1)/2; // 0=blue, 1=orange
+    const eyeR = Math.round(59 + eyeBlend*(244-59));
+    const eyeG = Math.round(168 + eyeBlend*(129-168));
+    const eyeB = Math.round(212 + eyeBlend*(42-212));
+    const eyeGlow = ctx.createRadialGradient(glX, coreY, 0, glX, coreY, 18);
+    eyeGlow.addColorStop(0,`rgba(${eyeR},${eyeG},${eyeB},${0.9*coreFlick})`);
+    eyeGlow.addColorStop(0.4,`rgba(${eyeR},${eyeG},${eyeB},${0.3*coreFlick})`);
+    eyeGlow.addColorStop(1,'transparent');
+    ctx.fillStyle=eyeGlow;
+    ctx.beginPath(); ctx.arc(glX, coreY, 18, 0, Math.PI*2); ctx.fill();
+    /* iris */
+    ctx.beginPath(); ctx.arc(glX, coreY, 7, 0, Math.PI*2);
+    ctx.fillStyle=`rgba(${eyeR},${eyeG},${eyeB},${0.95*coreFlick})`; ctx.fill();
+    ctx.beginPath(); ctx.arc(glX, coreY, 3, 0, Math.PI*2);
+    ctx.fillStyle='rgba(0,0,0,0.8)'; ctx.fill();
+
+    /* ambient eye glow on scene */
+    const sceneGlow = ctx.createRadialGradient(glX, coreY, 0, glX, coreY, W*0.35);
+    sceneGlow.addColorStop(0, `rgba(${eyeR},${eyeG},${eyeB},0.06)`);
+    sceneGlow.addColorStop(0.5, `rgba(${eyeR},${eyeG},${eyeB},0.02)`);
+    sceneGlow.addColorStop(1,'transparent');
+    ctx.fillStyle=sceneGlow; ctx.fillRect(0,0,W,H);
+
+    /* ── ORANGE PORTAL — on right wall ── */
+    const opX = W*0.88, opY = H*0.48, opRx = W*0.022, opRy = H*0.10;
+    const opFlick = 0.8 + 0.2*Math.sin(t*0.05);
+    /* portal glow on wall */
+    const opWall = ctx.createRadialGradient(opX, opY, 0, opX, opY, W*0.15);
+    opWall.addColorStop(0,`rgba(244,129,42,${0.18*opFlick})`);
+    opWall.addColorStop(0.5,`rgba(244,129,42,${0.07*opFlick})`);
+    opWall.addColorStop(1,'transparent');
+    ctx.fillStyle=opWall; ctx.fillRect(0,0,W,H);
+    /* portal interior — dark void */
+    ctx.fillStyle='#0A0A12';
+    ctx.beginPath(); ctx.ellipse(opX,opY,opRx,opRy,0,0,Math.PI*2); ctx.fill();
+    /* outer rim */
+    ctx.strokeStyle=`rgba(244,129,42,${0.9*opFlick})`; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.ellipse(opX,opY,opRx,opRy,0,0,Math.PI*2); ctx.stroke();
+    /* inner rim */
+    ctx.strokeStyle=`rgba(250,176,112,${0.5*opFlick})`; ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.ellipse(opX,opY,opRx*0.7,opRy*0.7,0,0,Math.PI*2); ctx.stroke();
+    /* ring ripples emanating outward */
+    rings.forEach(ring => {
+      ring.r = (ring.r + ring.spd) % ring.maxR;
+      const rScale = ring.r / ring.maxR;
+      const rAlpha = ring.a * (1-rScale);
+      ctx.strokeStyle=`rgba(244,129,42,${rAlpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.ellipse(opX, opY, opRx + rScale*W*0.07, opRy + rScale*H*0.12, 0, 0, Math.PI*2);
+      ctx.stroke();
+    });
+
+    /* ── BLUE PORTAL — on floor ── */
+    const bpX = W*0.60, bpY = H*0.89, bpRx = W*0.055, bpRy = H*0.022;
+    const bpFlick = 0.75 + 0.25*Math.sin(t*0.038+1.5);
+    const bpWall = ctx.createRadialGradient(bpX, bpY, 0, bpX, bpY, W*0.18);
+    bpWall.addColorStop(0,`rgba(59,168,212,${0.14*bpFlick})`);
+    bpWall.addColorStop(1,'transparent');
+    ctx.fillStyle=bpWall; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#050508';
+    ctx.beginPath(); ctx.ellipse(bpX,bpY,bpRx,bpRy,0,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle=`rgba(59,168,212,${0.85*bpFlick})`; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.ellipse(bpX,bpY,bpRx,bpRy,0,0,Math.PI*2); ctx.stroke();
+    ctx.strokeStyle=`rgba(127,208,240,${0.45*bpFlick})`; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.ellipse(bpX,bpY,bpRx*0.65,bpRy*0.65,0,0,Math.PI*2); ctx.stroke();
+
+    /* ── APERTURE LOGO — faint on back wall ── */
+    const aX = W*0.46, aY = H*0.50, aR = W*0.065;
+    const logoA = 0.04 + 0.01*Math.sin(t*0.015);
+    ctx.save(); ctx.globalAlpha=logoA;
+    /* outer circle */
+    ctx.strokeStyle='rgba(232,230,224,0.8)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(aX,aY,aR,0,Math.PI*2); ctx.stroke();
+    /* inner circle */
+    ctx.beginPath(); ctx.arc(aX,aY,aR*0.55,0,Math.PI*2); ctx.stroke();
+    /* three spoke cuts */
+    for(let k=0;k<3;k++){
+      const angle = (k/3)*Math.PI*2 - Math.PI/2;
+      const x0=aX+Math.cos(angle)*aR*0.55;
+      const y0=aY+Math.sin(angle)*aR*0.55;
+      const x1=aX+Math.cos(angle)*aR;
+      const y1=aY+Math.sin(angle)*aR;
+      ctx.strokeStyle='rgba(10,10,12,1)'; ctx.lineWidth=5;
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+    }
+    ctx.restore();
+
+    /* ── Light strips on ceiling ── */
+    const lsGlow = 0.7 + 0.3*Math.sin(t*0.02);
+    /* orange strip */
+    const ls1 = ctx.createLinearGradient(0, H*0.075, 0, H*0.12);
+    ls1.addColorStop(0,`rgba(244,129,42,${0.55*lsGlow})`);
+    ls1.addColorStop(1,'transparent');
+    ctx.fillStyle=ls1; ctx.fillRect(W*0.28,H*0.075,W*0.15,H*0.045);
+    /* blue strip */
+    const ls2 = ctx.createLinearGradient(0, H*0.075, 0, H*0.12);
+    ls2.addColorStop(0,`rgba(59,168,212,${0.5*lsGlow})`);
+    ls2.addColorStop(1,'transparent');
+    ctx.fillStyle=ls2; ctx.fillRect(W*0.55,H*0.075,W*0.12,H*0.045);
+
+    /* ── Floating dust ── */
+    dust.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.y<-0.02){p.y=1.02;p.x=Math.random();}
+      if(p.x<-0.02||p.x>1.02){p.x=Math.random();}
+      const da = p.a*(0.5+0.5*Math.sin(t*0.06+p.ph));
+      ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(232,230,224,${da*0.25})`; ctx.fill();
+    });
+
+    /* ── Left vignette — blend into page ── */
+    const vl=ctx.createLinearGradient(0,0,W*0.32,0);
+    vl.addColorStop(0,'rgba(10,10,12,1)');
+    vl.addColorStop(0.6,'rgba(10,10,12,0.4)');
+    vl.addColorStop(1,'transparent');
+    ctx.fillStyle=vl; ctx.fillRect(0,0,W*0.32,H);
+
+    /* top vignette */
+    const vt=ctx.createLinearGradient(0,0,0,H*0.08);
+    vt.addColorStop(0,'rgba(7,7,9,0.95)');
+    vt.addColorStop(1,'transparent');
+    ctx.fillStyle=vt; ctx.fillRect(0,0,W,H*0.08);
+
+    /* bottom */
+    const vb=ctx.createLinearGradient(0,H*0.85,0,H);
+    vb.addColorStop(0,'transparent');
+    vb.addColorStop(1,'rgba(10,10,12,0.98)');
+    ctx.fillStyle=vb; ctx.fillRect(0,H*0.85,W,H*0.15);
+
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+<!-- Cursor — portal energy dot -->
+<script>
+(function(){
+  let isOrange = true;
+  const orbs = [];
+  for(let i=0;i<6;i++){
+    const d=document.createElement('div');
+    const s=8-i*1.1;
+    d.className='cursor-orb';
+    d.style.cssText=`position:fixed;width:${s}px;height:${s}px;border-radius:50%;pointer-events:none;z-index:9996;transform:translate(-50%,-50%);transition:left ${0.03+i*0.035}s,top ${0.03+i*0.035}s,background 1s;`;
+    document.body.appendChild(d); orbs.push(d);
+  }
+  let tick=0;
+  document.addEventListener('mousemove',e=>{
+    tick++;
+    if(tick%120===0) isOrange=!isOrange;
+    const col = isOrange
+      ? `rgba(244,129,42,${0.18-orbs.indexOf(orbs[0])*0.025})`
+      : `rgba(59,168,212,${0.18-orbs.indexOf(orbs[0])*0.025})`;
+    orbs.forEach((o,i)=>{
+      o.style.left=e.clientX+'px'; o.style.top=e.clientY+'px';
+      o.style.background= isOrange
+        ? `rgba(244,129,42,${0.15-i*0.022})`
+        : `rgba(59,168,212,${0.15-i*0.022})`;
+    });
+  });
+})();
+</script>
+
+<!-- Render from PORTFOLIO data -->
+<script>
+(function(){
+  const d = PORTFOLIO;
+
+  /* NAV */
+  document.getElementById('nav-name').textContent =
+    d.name.first[0] + ' · ' + d.name.last[0];
+
+  /* HERO */
+  document.getElementById('hero-eyebrow').textContent = d.title;
+  const heroName = document.getElementById('hero-name');
+  heroName.innerHTML = d.name.first + ' ' + d.name.last +
+    '<span>' + d.tagline.split('.')[0].trim() + '</span>';
+  document.getElementById('hero-tagline').textContent = d.tagline;
+  document.getElementById('subject-badge').textContent =
+    d.title + ' — ' + (d.dossier[0] ? d.dossier[0].value : '');
+
+  /* ABOUT TEXT */
+  const aboutEl = document.getElementById('about-text');
+  d.bio.forEach(para => {
+    const p = document.createElement('p');
+    p.innerHTML = para;
+    aboutEl.appendChild(p);
+  });
+  const ann = document.createElement('div');
+  ann.className = 'annotation';
+  ann.textContent = 'Strong attention to detail, a relentless problem-solving instinct, and an unwavering commitment to quality across the full stack.';
+  aboutEl.appendChild(ann);
+
+  /* DOSSIER */
+  const dossierEl = document.getElementById('dossier');
+  d.dossier.forEach(row => {
+    dossierEl.innerHTML += `<div class="dossier-row"><span class="d-key">${row.label}</span><span class="d-val">${row.value}</span></div>`;
+  });
+
+  /* SKILLS */
+  const skillsEl = document.getElementById('skills-grid');
+  d.skills.forEach((group, i) => {
+    const div = document.createElement('div');
+    div.className = 'skill-group reveal';
+    if(i>0) div.style.transitionDelay=(i*0.1)+'s';
+    div.innerHTML = `<div class="skill-group-title">${group.category}</div>
+      <div class="skill-tags">${group.items.map(s=>`<div class="skill-tag">${s}</div>`).join('')}</div>`;
+    skillsEl.appendChild(div);
+  });
+
+  /* PROJECTS */
+  const projEl = document.getElementById('projects-list');
+  d.projects.forEach((proj, i) => {
+    const el = document.createElement('div');
+    el.className = 'project-item reveal';
+    if(i>0) el.style.transitionDelay=(i*0.07)+'s';
+    el.innerHTML = `
+      <div class="proj-num">${String(i+1).padStart(2,'0')}</div>
+      <div>
+        <div class="proj-title">${proj.title}</div>
+        <p class="proj-desc">${proj.description}</p>
+      </div>
+      ${proj.url ? `<a href="${proj.url}" target="_blank" class="proj-link">View</a>` : ''}`;
+    projEl.appendChild(el);
+  });
+
+  /* CONTACT */
+  document.getElementById('contact-sub').innerHTML =
+    'Open to collaboration, new opportunities,<br>and interesting conversations.';
+  const contactRow = document.getElementById('contact-row');
+  const items = [];
+  if(d.links.linkedin) items.push({href:d.links.linkedin, icon:'in',   label:'LinkedIn'});
+  if(d.links.github)   items.push({href:d.links.github,   icon:'</>',  label:'GitHub'});
+  if(d.links.website)  items.push({href:d.links.website,  icon:'◈',    label:'Website'});
+  if(d.links.email)    items.push({href:'mailto:'+d.links.email, icon:'@', label:'Email'});
+  items.forEach(item => {
+    contactRow.innerHTML += `
+      <a href="${item.href}" target="_blank" class="contact-node">
+        <div class="cnode-icon">${item.icon}</div>
+        <div class="cnode-label">${item.label}</div>
+      </a>`;
+  });
+
+  /* FOOTER */
+  document.getElementById('footer-left').textContent =
+    '© ' + new Date().getFullYear() + '  ' + d.name.first + ' ' + d.name.last;
+  document.getElementById('footer-right').textContent = d.footer;
+
+  /* SCROLL REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.08});
+  reveals.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
 </html>
