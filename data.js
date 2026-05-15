@@ -35,7 +35,7 @@ const PORTFOLIO = {
   skills: [
     {
       category: "Frontend",
-      items: ["HTML", "CSS", "JavaScript", "React", "Angular", "Responsive Design", "UI / UX", "ServiceNow UI Builder"],
+      items: ["JavaScript", "React", "Angular", "Vue", "Responsive Design", "UI / UX", "ServiceNow UI Builder"],
     },
     {
       category: "Backend",
